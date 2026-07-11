@@ -1,0 +1,18 @@
+# IDE (when the whole repo, not just one service, is opened)
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Downloaded Spring Initializr zips
+*.zip
+
+# Env / secrets
+.env
+*.local
+
+# Logs
+*.log

@@ -1,0 +1,9 @@
+CREATE TABLE orders (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    symbol VARCHAR(10) NOT NULL,
+    side VARCHAR(4) NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(18,4) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    created_at DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
+);

@@ -54,7 +54,8 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
   - Group: `com.tradedesk`, Artifact: `order-service`
   - Dependencies: Spring Web (MVC), JDBC API, MS SQL Server Driver, Spring AOP (`spring-boot-starter-aspectj`), Validation, Lombok
 - [x] `Order` domain model (`Order`, `OrderSide`, `OrderStatus`)
-- [ ] SQL Server (Docker) + orders table + stored procedure
-- [ ] REST endpoints + JDBC wiring
+- [x] SQL Server (Docker) + orders table + stored procedure
+- [x] Datasource config wired (`application.properties` → local SQL Server, password via `DB_PASSWORD` env var)
+- [x] `OrderDao`/`OrderDaoImpl` + `OrderService`/`OrderServiceImpl` + `OrderController` (`POST /orders`) — compiles, not yet tested end-to-end
 - [ ] AOP audit-logging aspect
 - [ ] Everything else in the build order above

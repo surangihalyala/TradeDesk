@@ -38,8 +38,8 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 
 ## Build order
 
-1. **`order-service`**: REST API + JDBC + a real stored procedure + an AOP logging aspect *(current phase)*
-2. Multi-threaded risk-check component (ExecutorService + Semaphore)
+1. **`order-service`**: REST API + JDBC + a real stored procedure + an AOP logging aspect *(done)*
+2. Multi-threaded risk-check component (ExecutorService + Semaphore) *(current phase)*
 3. SOAP account-verification endpoint (Spring-WS)
 4. Split off `settlement-service`, wire Kafka between the two
 5. JMS notification flow (settlement-service → notification-service)
@@ -56,6 +56,7 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 - [x] `Order` domain model (`Order`, `OrderSide`, `OrderStatus`)
 - [x] SQL Server (Docker) + orders table + stored procedure
 - [x] Datasource config wired (`application.properties` → local SQL Server, password via `DB_PASSWORD` env var)
-- [x] `OrderDao`/`OrderDaoImpl` + `OrderService`/`OrderServiceImpl` + `OrderController` (`POST /orders`) — compiles, not yet tested end-to-end
-- [ ] AOP audit-logging aspect
+- [x] `OrderDao`/`OrderDaoImpl` + `OrderService`/`OrderServiceImpl` + `OrderController` (`POST /orders`) — tested end-to-end against real DB
+- [x] AOP audit-logging aspect (`OrderAuditAspect`, logs on order placement success/failure)
+- [ ] Multi-threaded risk-check component (ExecutorService + Semaphore)
 - [ ] Everything else in the build order above

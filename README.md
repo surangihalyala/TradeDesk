@@ -39,8 +39,8 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 ## Build order
 
 1. **`order-service`**: REST API + JDBC + a real stored procedure + an AOP logging aspect *(done)*
-2. Multi-threaded risk-check component (ExecutorService + Semaphore) *(current phase)*
-3. SOAP account-verification endpoint (Spring-WS)
+2. Multi-threaded risk-check component (ExecutorService + Semaphore) *(done)*
+3. SOAP account-verification endpoint (Spring-WS) *(current phase)*
 4. Split off `settlement-service`, wire Kafka between the two
 5. JMS notification flow (settlement-service → notification-service)
 6. Spring Batch nightly reconciliation job
@@ -58,5 +58,6 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 - [x] Datasource config wired (`application.properties` → local SQL Server, password via `DB_PASSWORD` env var)
 - [x] `OrderDao`/`OrderDaoImpl` + `OrderService`/`OrderServiceImpl` + `OrderController` (`POST /orders`) — tested end-to-end against real DB
 - [x] AOP audit-logging aspect (`OrderAuditAspect`, logs on order placement success/failure)
-- [ ] Multi-threaded risk-check component (ExecutorService + Semaphore)
+- [x] Multi-threaded risk-check component (`RiskCheckService`, ExecutorService + Semaphore(3)), wired into `OrderServiceImpl.placeOrder()` — orders over the exposure limit are inserted as `REJECTED` instead of `NEW`, tested end-to-end
+- [ ] SOAP account-verification endpoint (Spring-WS)
 - [ ] Everything else in the build order above

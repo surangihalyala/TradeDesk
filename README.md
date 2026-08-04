@@ -40,8 +40,8 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 
 1. **`order-service`**: REST API + JDBC + a real stored procedure + an AOP logging aspect *(done)*
 2. Multi-threaded risk-check component (ExecutorService + Semaphore) *(done)*
-3. SOAP account-verification endpoint (Spring-WS) *(current phase)*
-4. Split off `settlement-service`, wire Kafka between the two
+3. SOAP account-verification endpoint (Spring-WS) *(done)*
+4. Split off `settlement-service`, wire Kafka between the two *(current phase)*
 5. JMS notification flow (settlement-service → notification-service)
 6. Spring Batch nightly reconciliation job
 7. CI/CD pipeline (GitHub Actions) + Azure deployment
@@ -59,5 +59,6 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 - [x] `OrderDao`/`OrderDaoImpl` + `OrderService`/`OrderServiceImpl` + `OrderController` (`POST /orders`) — tested end-to-end against real DB
 - [x] AOP audit-logging aspect (`OrderAuditAspect`, logs on order placement success/failure)
 - [x] Multi-threaded risk-check component (`RiskCheckService`, ExecutorService + Semaphore(3)), wired into `OrderServiceImpl.placeOrder()` — orders over the exposure limit are inserted as `REJECTED` instead of `NEW`, tested end-to-end
-- [ ] SOAP account-verification endpoint (Spring-WS)
+- [x] SOAP account-verification endpoint (Spring-WS) — contract-first from `accountVerification.xsd`, `AccountVerificationEndpoint` handles `accountVerificationRequest`, WSDL served at `/ws/accountVerification.wsdl`, tested end-to-end with raw SOAP requests
+- [ ] Split off `settlement-service`, wire Kafka between the two
 - [ ] Everything else in the build order above

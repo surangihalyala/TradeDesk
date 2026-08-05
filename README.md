@@ -60,5 +60,7 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 - [x] AOP audit-logging aspect (`OrderAuditAspect`, logs on order placement success/failure)
 - [x] Multi-threaded risk-check component (`RiskCheckService`, ExecutorService + Semaphore(3)), wired into `OrderServiceImpl.placeOrder()` — orders over the exposure limit are inserted as `REJECTED` instead of `NEW`, tested end-to-end
 - [x] SOAP account-verification endpoint (Spring-WS) — contract-first from `accountVerification.xsd`, `AccountVerificationEndpoint` handles `accountVerificationRequest`, WSDL served at `/ws/accountVerification.wsdl`, tested end-to-end with raw SOAP requests
-- [ ] Split off `settlement-service`, wire Kafka between the two
+- [x] Kafka running in Docker (`docker-compose.yml`, `apache/kafka:3.8.0`, KRaft mode), `order-placed` topic created
+- [x] `settlement-service` scaffolded (Spring Boot 4.1.0, port 8081) with its own `Settlement` database + `settlements` table, datasource wired, boots clean
+- [ ] Kafka producer in `order-service` (publish `OrderPlaced` after placing an order) + consumer in `settlement-service`
 - [ ] Everything else in the build order above

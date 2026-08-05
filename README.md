@@ -41,8 +41,8 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 1. **`order-service`**: REST API + JDBC + a real stored procedure + an AOP logging aspect *(done)*
 2. Multi-threaded risk-check component (ExecutorService + Semaphore) *(done)*
 3. SOAP account-verification endpoint (Spring-WS) *(done)*
-4. Split off `settlement-service`, wire Kafka between the two *(current phase)*
-5. JMS notification flow (settlement-service → notification-service)
+4. Split off `settlement-service`, wire Kafka between the two *(done)*
+5. JMS notification flow (settlement-service → notification-service) *(current phase)*
 6. Spring Batch nightly reconciliation job
 7. CI/CD pipeline (GitHub Actions) + Azure deployment
 
@@ -62,5 +62,5 @@ TradeDesk simulates the backend behind a brokerage's trading desk — internal i
 - [x] SOAP account-verification endpoint (Spring-WS) — contract-first from `accountVerification.xsd`, `AccountVerificationEndpoint` handles `accountVerificationRequest`, WSDL served at `/ws/accountVerification.wsdl`, tested end-to-end with raw SOAP requests
 - [x] Kafka running in Docker (`docker-compose.yml`, `apache/kafka:3.8.0`, KRaft mode), `order-placed` topic created
 - [x] `settlement-service` scaffolded (Spring Boot 4.1.0, port 8081) with its own `Settlement` database + `settlements` table, datasource wired, boots clean
-- [ ] Kafka producer in `order-service` (publish `OrderPlaced` after placing an order) + consumer in `settlement-service`
+- [x] Kafka producer in `order-service` (`OrderServiceImpl` publishes `OrderPlacedEvent` to `order-placed` after an approved order is inserted) + consumer in `settlement-service` (`OrderPlacedListener` inserts a `PENDING` row into `settlements`) — tested end-to-end: real order placed via REST → event on Kafka → settlement row created in DB
 - [ ] Everything else in the build order above
